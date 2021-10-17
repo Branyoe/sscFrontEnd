@@ -1,0 +1,106 @@
+<div *ngIf="loading" class="loading">
+    <app-loading></app-loading>
+</div>
+
+<div class="container" [class.sign-in-mode]="sign_mode === true" [class.sign-up-mode]="sign_mode === false">
+    <div class="forms-container">
+        <div class="signin-signup">
+            <form action="" (ngSubmit)="captureFormSignIn()" [formGroup]="formSignIn" class="sign-in-form">
+                <h2 class="title">Ingresa</h2>
+                <div class="alert" *ngIf="errorsSignIn.email === true">
+                    ¡El usuario no fue encontrado!
+                </div>
+                <div class="alert" *ngIf="errorsSignIn.password === true">
+                    ¡Contraseña incorrecta!
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="email" formControlName="email" placeholder="Email">
+                </div>
+                <div *ngIf="formSignIn.controls['email'].invalid && formSignIn.controls['email'].dirty" class="alert">
+                    <div *ngIf="formSignIn.controls['email'].errors.email">no luce como un correo</div>
+                    <div *ngIf="formSignIn.controls['email'].errors.required">esto es importante</div>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" formControlName="password" placeholder="Contraseña">
+                </div>
+                <div *ngIf="formSignIn.controls['password'].invalid && formSignIn.controls['password'].dirty" class="alert">
+                    <div *ngIf="formSignIn.controls['password'].errors.required">esto es importante</div>
+                    <div *ngIf="formSignIn.controls['password'].errors.minlength" >al menos 8 caracteres</div>
+                </div>
+                <input [disabled]="!formSignIn.valid" type="submit" value="Ingresar" class="btn solid">
+            </form>
+    
+            <form [formGroup]="formSignUp" (ngSubmit)="captureFormSignUp()" class="sign-up-form">
+                <h2 class="title">Registrate</h2>
+                <div class="alert" *ngIf="errorsSignUp.username === true">
+                    ¡El nombre de usuario ya está en uso!
+                </div>
+                <div class="alert" *ngIf="errorsSignUp.email === true">
+                    ¡El email ya está en uso!
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input formControlName="username" type="text" placeholder="Nombre de usuario">
+                </div>
+                <div *ngIf="formSignUp.controls['username'].invalid && formSignUp.controls['username'].dirty" class="alert">
+                    <div *ngIf="formSignUp.controls['username'].errors.minlength">al menos 3 caracteres</div>
+                    <div *ngIf="formSignUp.controls['username'].errors.required">esto es importante</div>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input formControlName="email" type="text" placeholder="Email">
+                </div>
+                <div *ngIf="formSignUp.controls['email'].invalid && formSignUp.controls['email'].dirty" class="alert">
+                    <div *ngIf="formSignUp.controls['email'].errors.email">no luce como un correo</div>
+                    <div *ngIf="formSignUp.controls['email'].errors.required">esto es importante</div>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input  formControlName="password" type="password" placeholder="Contraseña">
+                </div>
+                <div *ngIf="formSignUp.controls['password'].invalid && formSignUp.controls['password'].dirty" class="alert">
+                    <div *ngIf="formSignUp.controls['password'].errors.minlength">al menos 8 caracteres</div>
+                    <div *ngIf="formSignUp.controls['password'].errors.required">esto es importante</div>
+                </div>
+
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input  formControlName="comfirmPassword" type="password" placeholder="Corfirma tu contraseña">
+                </div>
+                <div class="alert" *ngIf="formSignUp.controls['comfirmPassword'].invalid && formSignUp.controls['comfirmPassword'].dirty">
+                    <div *ngIf="formSignUp.controls['comfirmPassword'].errors.required">esto es importante</div>
+                </div>
+                <div *ngIf="formSignUp.controls['comfirmPassword'].dirty && (formSignUp.controls['comfirmPassword'].value != formSignUp.controls['password'].value) && formSignUp.controls['comfirmPassword'].value != '' && formSignUp.controls['password'].value != ''" class="alert">
+                    las contraseñas no coinciden
+                </div>
+                <input [disabled]="!formSignUp.valid || (formSignUp.controls['comfirmPassword'].value == formSignUp.controls['password'].value && !formSignUp.controls['comfirmPassword'].dirty) || (formSignUp.controls['comfirmPassword'].value != formSignUp.controls['password'].value && formSignUp.controls['comfirmPassword'].dirty)"  type="submit" value="Registrar" class="btn solid">
+            </form>
+        </div>
+    </div>
+    
+    <div class="panels-container">
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>¿Nuevo por aquí?</h3>
+                <p>Crea una nueva cuenta pulsando este botón</p>
+                <button class="btn transparent" (click)="changeSingnMode()">Crear cuenta</button>
+            </div>
+    
+            <img src="../../../assets/images/undraw_My_answer_re_k4dv (1).svg" class="image">
+        </div>
+    
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>¿Ya tienes una cuenta?</h3>
+                <p>Inicia sesion pulsando este botón</p>
+                <button class="btn transparent" (click)="changeSingnMode()">Iniciar sesion</button>
+            </div>
+    
+            <img src="../../../assets/images/undraw_Questions_re_1fy7 (1).svg" class="image">
+        </div>
+    </div>
+</div>
